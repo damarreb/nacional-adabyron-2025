@@ -1,58 +1,31 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+#include <bits/stdc++.h>
+using namespace std;
 
-int main() {
-	std::ios::sync_with_stdio(false);
-	std::cin.tie(nullptr);
+int main(){
+	int t; cin >> t;
+	while (t--){
+		int N; cin >> N;
+		priority_queue<int> l;
+		priority_queue<int,vector<int>,greater<int>> r;
+		int num = 1;
+		int x; cin >> x; l.push(x);
+		for (int i = 1; i < N; i++){
+			cin >> x;
+			int m = l.top();
+			if (x <= m) l.push(x);
+			else{
+				num++;
+				r.push(x);
+			} 
 
-	int T;
-	std::cin >> T;
-
-	while (T--) {
-		int N;
-		std::cin >> N;
-
-		// left.size() >= right.size()
-		std::priority_queue<int> left;
-		std::priority_queue<int, std::vector<int>, std::greater<int>> right;
-
-		int cuenta = 0;
-
-		for (int i = 0; i < N; ++i) {
-			int actual;
-			std::cin >> actual;
-
-			// número par de noches anteriores
-			// criterio: llegar más tarde que n/2 noches anteriores.
-			// left contiene la mitad inferior de las n noches anteriores.
-			// Es decir: actual > left.top()
-			//
-			// número impar de noches anteriores
-			// criterio: llegar mas tarde que ceil(n/2) noches anteriores.
-			// left contiene ceil(n/2) noches anteriores.
-			// Es decir: actual > left.top() igualmente.
-			if (left.empty() || actual > left.top()) {
-				cuenta++;
+			if (r.size()>l.size()){
+				l.push(r.top()); r.pop();
 			}
-
-			if (left.empty() || actual <= left.top()) {
-				left.push(actual);
-			} else {
-				right.push(actual);
-			}
-
-			// Rebalanceo
-			if (left.size() > right.size() + 1) {
-				right.push(left.top());
-				left.pop();
-			} else if (right.size() > left.size()) {
-				left.push(right.top());
-				right.pop();
+			else if (l.size()-r.size() >= 2){
+				r.push(l.top()); l.pop();
 			}
 		}
-
-		std::cout << cuenta << '\n';
+		cout << num << '\n';
 	}
+	return 0;
 }
-
