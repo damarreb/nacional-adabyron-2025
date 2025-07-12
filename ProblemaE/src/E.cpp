@@ -1,59 +1,45 @@
-#include <iostream>
-#include <vector>
-#include <iomanip>
-#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
 
-bool es_posible(const std::vector<int>& v, int k, double media) {
+const double ERROR = 1e-4;
+
+bool valid_avg(double avg, vector<double> &v, int k){
 	int n = v.size();
-	// Suma prefijo restando a cada elemento original media
-	std::vector<double> prefix(n + 1, 0.0);
-
-	for (int i = 0; i < n; ++i) {
-		prefix[i + 1] = prefix[i] + (v[i] - media);
+	auto w = [&](int i){
+		return v[i] - avg;
+	};
+	
+	vector<double> p(n+1);
+	p.front() = 0;
+	for (int i = 1; i <= n; i++) p[i] = p[i-1] + w(i-1);
+	double q = 0;
+	for (int i = k; i <= n; i++){
+		q = min(q,p[i-k]);
+		if (p[i]-q >= 0) return true;
 	}
-
-	double min_prefix = 0.0;
-	for (int i = k; i <= n; ++i) {
-		if (prefix[i] - min_prefix >= 0.0)
-			return true;
-		min_prefix = std::min(min_prefix, prefix[i - k + 1]);
-	}
-
 	return false;
+
 }
 
-double max_avg_binary_search(const std::vector<int>& v, int k) {
-	double low = *std::min_element(begin(v), end(v));
-	double high = *std::max_element(begin(v), end(v));
-	double eps = 1e-5;
+bool solve(){
+	int n, k; cin >> n >> k;
+	if (!n) return false;
 
-	while (high - low > eps) {
-		double mid = (low + high) / 2.0;
-		if (es_posible(v, k, mid))
-			low = mid;
-		else
-			high = mid;
+	vector<double> v(n);
+	for (auto &x : v) cin >> x;
+
+	double m0 = *min_element(v.begin(),v.end());
+	double m1 = *max_element(v.begin(),v.end());
+	while (m1-m0 >= ERROR){
+		double mid = (m0+m1)/2;
+		if (valid_avg(mid,v,k)) m0 = mid;
+		else m1 = mid;
 	}
-
-	return low;
+	cout << (m0+m1)/2 << '\n';
+	return true;
 }
 
-int main() {
-	std::ios::sync_with_stdio(false);
-	std::cin.tie(nullptr);
-
-	while (true) {
-		int n, k;
-		std::cin >> n >> k;
-		if (n == 0 && k == 0) break;
-
-		std::vector<int> v(n);
-		for (int& x : v) std::cin >> x;
-
-		double resultado = max_avg_binary_search(v, k);
-		std::cout << std::fixed << std::setprecision(5) << resultado << '\n';
-	}
-
+int main(){
+	while (solve());
 	return 0;
 }
-
