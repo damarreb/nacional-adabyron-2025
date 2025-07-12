@@ -1,38 +1,27 @@
-#include <cstdint>
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
+using namespace std;
 
-int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
+typedef long long ll;
 
-    uint32_t T_est;
-    while (std::cin >> T_est && T_est != 0) {
-        uint32_t low = 1, high = T_est;
-        uint32_t answer = 0;
-        int aciertos = 0;
-        std::string resp;
-
-        while (low <= high) {
-            uint32_t mid = low + (high - low) / 2;
-
-            // Ajustamos la consulta para compensar los "SI" anteriores:
-            uint64_t consulta = uint64_t(mid) << aciertos;
-
-            std::cout << "? " << consulta << std::endl;
-            std::cin >> resp;
-
-            if (resp == "SI") {
-                answer = mid;
-                ++aciertos;
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-
-        std::cout << "=> " << answer << std::endl;
+bool solve(){
+    ll n; cin >> n;
+    if (!n) return false;
+    ll l = 1, r = n, a = 0;
+    while (l < r){
+        ll mid = (l+r)/2+1;
+        cout << "? " << mid*(1LL<<a) << endl;
+        string s; cin >> s;
+        if (s == "SI"){
+            a++; l = mid;
+        } else r = mid-1LL;
+        //cout << '(' << l << ' ' << r << ")\n";
     }
+    cout << "=> " << l << endl;
+    return true;
+}
+
+int main(){
+    while (solve()) ;
     return 0;
 }
 
