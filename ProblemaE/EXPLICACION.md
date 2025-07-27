@@ -27,19 +27,19 @@ obtener una media igual o superior a $m$ usando al menos $k$ elementos
 consecutivos de $v$.
 
 La media de la secuencia de elementos entre las posiciones $i$ y $j$ del array
-es $avg_{i,j} = \frac{\sum_{k=i}^{j} v_k}{j - i + 1}$.
+es $avg(i,j) = \frac{\sum_{k=i}^{j} v_k}{j - i + 1}$.
 
 Estamos por tanto buscando un subarray de longitud $l \geq k$ tal que la suma
 de sus elementos $s$ verifique $s \geq m \cdot l$.
 
-Otra form de verlo es que buscamos que $avg_{i,j} \geq m$, o lo que es lo
-mismo: $avg_{i,j} - m \geq 0$:
+Otra form de verlo es que buscamos que $avg(i,j) \geq m$, o lo que es lo
+mismo: $avg(i,j) - m \geq 0$:
 
 $$
 \frac{\sum_{k=i}^{j} v_k}{j - i + 1} - m \geq 0 \rightarrow
 \frac{\sum_{k=i}^{j}{v_k} - m \cdot (j - i + 1)}{j - i + 1} \geq 0 \rightarrow
 \frac{\sum_{k=i}^{j}{v_k - m}}{j - i + 1} \geq 0 \rightarrow
-\frac{\sum_{k=i}^{j}{v_k - m}} \geq 0
+\sum_{k=i}^{j}{v_k - m} \geq 0
 $$
 
 Es decir, la pregunta es equivalente a plantear un array $v \prime$ donde
