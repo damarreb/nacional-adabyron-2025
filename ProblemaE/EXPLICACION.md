@@ -29,7 +29,7 @@ consecutivos de $v$.
 La media de la secuencia de elementos entre las posiciones $i$ y $j$ del array
 es $avg_{i,j} = \frac{\sum_{k=i}^{j} v_k}{j - i + 1}$.
 
-Estamos por tanto buscando un subarray de longitud $l \gtq k$ tal que la suma
+Estamos por tanto buscando un subarray de longitud $l \geq k$ tal que la suma
 de sus elementos $s$ verifique $s \geq m \cdot l$.
 
 Otra form de verlo es que buscamos que $avg_{i,j} \geq m$, o lo que es lo
