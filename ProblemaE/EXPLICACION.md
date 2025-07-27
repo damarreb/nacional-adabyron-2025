@@ -5,7 +5,7 @@ En resumen, el problema se puede expresar como:
 > $k$, hallar el subarray de al menos $k$ elementos consecutivos tal que la
 > media de dicho subarray sea máxima.
 
-Probar todos los subarrays posibles tendría un coste prohibitivo ($O(n^{2})$).
+Probar todos los subarrays posibles tendría un coste prohibitivo ( $O(n^{2})$ ).
 En su lugar, podemos utilizar una estrategia de búsqueda binaria, en la que
 comprobamos si existe algún subarray de al menos $k$ elementos con un media
 igual o superior a $m$.
